@@ -1,0 +1,54 @@
+CREATE TABLE Admin
+(
+  Admin_ID CHAR(5) NOT NULL UNIQUE,
+  Name VARCHAR(30) NOT NULL,
+  Password VARCHAR(30) NOT NULL,
+  Phone_Number VARCHAR(15) NOT NULL,
+  Email VARCHAR(50) NOT NULL,
+    
+    CONSTRAINT Admin_Pk PRIMARY KEY (Admin_ID)
+);
+
+CREATE TABLE Customer
+(
+  Customer_ID CHAR(5) NOT NULL UNIQUE,
+  Name VARCHAR(30) NOT NULL,
+  Phone_Number VARCHAR(15) NOT NULL,
+  Email VARCHAR(50) NOT NULL,
+    
+    CONSTRAINT Customer_Pk PRIMARY KEY (Customer_ID)
+);
+
+CREATE TABLE Fish
+(
+  Fish_ID CHAR(5) NOT NULL UNIQUE,
+  Name VARCHAR(20) NOT NULL,
+  Price DOUBLE(10,2) NOT NULL,
+  Lifespan VARCHAR(20) NOT NULL,
+    
+    CONSTRAINT Fish_Pk PRIMARY KEY (Fish_ID)
+);
+
+CREATE TABLE OrderItem
+(
+  OrderItem_ID INT AUTO_INCREMENT,
+  Customer_ID CHAR(5) NOT NULL,
+  Order_Date DATE NOT NULL,
+  Total_Sale double(10,2),
+    
+    CONSTRAINT OrderItem_Pk PRIMARY KEY (OrderItem_ID),
+    CONSTRAINT OrderItem_Customer_Fk FOREIGN KEY (Customer_ID) REFERENCES Customer (Customer_ID)  
+);
+
+CREATE TABLE OrderDetail
+(
+  OrderDetail_ID INT NOT NULL UNIQUE,
+  Fish_ID CHAR(5) NOT NULL,
+  OrderItem_ID INT,
+  Weight double(6,2) NOT NULL,
+  Total_Price double(10,2) NOT NULL,
+    
+    CONSTRAINT OrderDetail_Pk PRIMARY KEY (OrderDetail_ID),
+    CONSTRAINT OrderDetail_Fish_Fk FOREIGN KEY (Fish_ID) REFERENCES Fish (Fish_ID),
+   CONSTRAINT OrderDetail_OrderItem_Fk FOREIGN KEY (OrderItem_ID) REFERENCES OrderItem (OrderItem_ID) 
+);
